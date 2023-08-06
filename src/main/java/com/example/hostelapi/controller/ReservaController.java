@@ -3,6 +3,7 @@ package com.example.hostelapi.controller;
 import com.example.hostelapi.domain.Reserva;
 import com.example.hostelapi.dto.ReservaDTO;
 import com.example.hostelapi.service.ReservaService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,11 @@ public class ReservaController {
   public ResponseEntity<Reserva> createReserva(@Validated @RequestBody ReservaDTO reservaDTO) {
     Reserva novaReserva = reservaService.createReserva(reservaDTO);
     return new ResponseEntity<>(novaReserva, HttpStatus.CREATED);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Reserva>> getAllReservas() {
+    List<Reserva> reservas = reservaService.getAllReservas();
+    return ResponseEntity.ok(reservas);
   }
 }

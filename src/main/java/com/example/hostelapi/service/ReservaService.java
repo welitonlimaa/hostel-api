@@ -4,11 +4,11 @@ import com.example.hostelapi.domain.Reserva;
 import com.example.hostelapi.dto.ReservaDTO;
 import com.example.hostelapi.repository.ReservaRepository;
 import com.example.hostelapi.service.exceptions.InvalidDataException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 @Service
 public class ReservaService {
@@ -30,5 +30,9 @@ public class ReservaService {
 
       Reserva reserva = new Reserva(null, reservaDto.getNomeHospede(), dataInicio, dataFim, reservaDto.getQuantidadePessoas(), "CONFIRMADA");
       return reservaRepository.save(reserva);
+  }
+
+  public List<Reserva> getAllReservas() {
+    return reservaRepository.findAll();
   }
 }
