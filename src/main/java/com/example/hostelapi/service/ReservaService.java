@@ -4,7 +4,9 @@ import com.example.hostelapi.domain.Reserva;
 import com.example.hostelapi.dto.ReservaDTO;
 import com.example.hostelapi.repository.ReservaRepository;
 import com.example.hostelapi.service.exceptions.InvalidDataException;
+import com.example.hostelapi.service.exceptions.ObjectNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,10 @@ public class ReservaService {
 
   public List<Reserva> getAllReservas() {
     return reservaRepository.findAll();
+  }
+
+  public Reserva getReservaById(Integer id) {
+    Optional<Reserva> reservaOptional = reservaRepository.findById(id);
+    return reservaOptional.orElseThrow(() -> new ObjectNotFoundException("Reserva não encontrada. ID: " + id));
   }
 }

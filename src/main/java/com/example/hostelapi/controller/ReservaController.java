@@ -32,4 +32,10 @@ public class ReservaController {
     List<Reserva> reservas = reservaService.getAllReservas();
     return ResponseEntity.ok(reservas);
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Reserva> getReservaById(@PathVariable Integer id) {
+    Reserva reserva = reservaService.getReservaById(id);
+    return ResponseEntity.ok(reserva);
+  }
 }

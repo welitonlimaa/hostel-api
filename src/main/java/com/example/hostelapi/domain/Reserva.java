@@ -18,7 +18,7 @@ public class Reserva {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
 
   private String nomeHospede;
 
@@ -28,7 +28,7 @@ public class Reserva {
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate dataFim;
 
-  private int quantidadePessoas;
+  private Integer quantidadePessoas;
 
   private String status;
 

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 public class ReservaDTO implements Serializable {
 
-  private Long id;
+  private Integer id;
   private String nomeHospede;
 
   @JsonFormat(pattern = "yyyy-MM-dd")
@@ -23,7 +23,7 @@ public class ReservaDTO implements Serializable {
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate dataFim;
 
-  private int quantidadePessoas;
+  private Integer quantidadePessoas;
   private String status;
 
   public ReservaDTO(Reserva obj) {
@@ -35,7 +35,7 @@ public class ReservaDTO implements Serializable {
     status = obj.getStatus();
   }
 
-  public ReservaDTO(Long id, String nomeHospede, LocalDate dataInicio, LocalDate dataFim, int quantidadePessoas, String status) {
+  public ReservaDTO(Integer id, String nomeHospede, LocalDate dataInicio, LocalDate dataFim, Integer quantidadePessoas, String status) {
     this.id = id;
     this.nomeHospede = nomeHospede;
     this.dataInicio = dataInicio;
