@@ -42,4 +42,14 @@ public class ReservaService {
     Optional<Reserva> reservaOptional = reservaRepository.findById(id);
     return reservaOptional.orElseThrow(() -> new ObjectNotFoundException("Reserva não encontrada. ID: " + id));
   }
+
+  public Reserva updateReserva(Integer id, ReservaDTO reservaDTO) {
+    Reserva reserva = getReservaById(id);
+    reserva.setNomeHospede(reservaDTO.getNomeHospede());
+    reserva.setDataInicio(reservaDTO.getDataInicio());
+    reserva.setDataFim(reservaDTO.getDataFim());
+    reserva.setQuantidadePessoas(reservaDTO.getQuantidadePessoas());
+    reserva.setStatus(reservaDTO.getStatus());
+    return reservaRepository.save(reserva);
+  }
 }

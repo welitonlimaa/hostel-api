@@ -38,4 +38,10 @@ public class ReservaController {
     Reserva reserva = reservaService.getReservaById(id);
     return ResponseEntity.ok(reserva);
   }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Reserva> updateReserva(@PathVariable Integer id, @Validated @RequestBody ReservaDTO reservaDTO) {
+    Reserva reservaAtualizada = reservaService.updateReserva(id, reservaDTO);
+    return ResponseEntity.ok(reservaAtualizada);
+  }
 }
