@@ -52,4 +52,10 @@ public class ReservaService {
     reserva.setStatus(reservaDTO.getStatus());
     return reservaRepository.save(reserva);
   }
+
+  public Reserva cancelarReserva(Integer id) {
+    Reserva reserva = getReservaById(id);
+    reserva.setStatus("CANCELADA");
+    return reservaRepository.save(reserva);
+  }
 }
