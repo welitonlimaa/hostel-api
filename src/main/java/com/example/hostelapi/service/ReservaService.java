@@ -5,12 +5,14 @@ import com.example.hostelapi.dto.ReservaDTO;
 import com.example.hostelapi.repository.ReservaRepository;
 import com.example.hostelapi.service.exceptions.InvalidDataException;
 import com.example.hostelapi.service.exceptions.ObjectNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 public class ReservaService {
@@ -23,15 +25,28 @@ public class ReservaService {
   }
 
   public Reserva createReserva(ReservaDTO reservaDto) {
-      LocalDate dataInicio = LocalDate.parse((reservaDto.getDataInicio()).toString());
-      LocalDate dataFim = LocalDate.parse((reservaDto.getDataFim()).toString());
+    try {
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date dataInicio = dateFormat.parse(dateFormat.format(reservaDto.getDataInicio()));
+      Date dataFim = dateFormat.parse(dateFormat.format(reservaDto.getDataFim()));
 
-      if (dataFim.isBefore(dataInicio)) {
+      if (dataFim.before(dataInicio)) {
         throw new InvalidDataException("A data de fim deve ser posterior à data de início.");
       }
 
-      Reserva reserva = new Reserva(null, reservaDto.getNomeHospede(), dataInicio, dataFim, reservaDto.getQuantidadePessoas(), "CONFIRMADA");
+      Reserva reserva = new Reserva(
+          null,
+          reservaDto.getNomeHospede(),
+          dataInicio,
+          dataFim,
+          reservaDto.getQuantidadePessoas(),
+          "CONFIRMADA"
+      );
+
       return reservaRepository.save(reserva);
+    } catch (ParseException e) {
+      throw new InvalidDataException("Formato de data inválido. Use o formato yyyy-MM-dd.");
+    }
   }
 
   public List<Reserva> getAllReservas() {

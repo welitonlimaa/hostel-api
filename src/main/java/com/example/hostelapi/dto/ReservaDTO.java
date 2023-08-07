@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class ReservaDTO implements Serializable {
 
@@ -15,10 +15,10 @@ public class ReservaDTO implements Serializable {
   private String nomeHospede;
 
   @JsonFormat(pattern = "yyyy-MM-dd")
-  private LocalDate dataInicio;
+  private Date dataInicio;
 
   @JsonFormat(pattern = "yyyy-MM-dd")
-  private LocalDate dataFim;
+  private Date dataFim;
 
   private Integer quantidadePessoas;
   private String status;
@@ -32,7 +32,7 @@ public class ReservaDTO implements Serializable {
     status = obj.getStatus();
   }
 
-  public ReservaDTO(Integer id, String nomeHospede, LocalDate dataInicio, LocalDate dataFim, Integer quantidadePessoas, String status) {
+  public ReservaDTO(Integer id, String nomeHospede, Date dataInicio, Date dataFim, Integer quantidadePessoas, String status) {
     this.id = id;
     this.nomeHospede = nomeHospede;
     this.dataInicio = dataInicio;
@@ -60,19 +60,19 @@ public class ReservaDTO implements Serializable {
     this.nomeHospede = nomeHospede;
   }
 
-  public LocalDate getDataInicio() {
+  public Date getDataInicio() {
     return dataInicio;
   }
 
-  public void setDataInicio(LocalDate dataInicio) {
+  public void setDataInicio(Date dataInicio) {
     this.dataInicio = dataInicio;
   }
 
-  public LocalDate getDataFim() {
+  public Date getDataFim() {
     return dataFim;
   }
 
-  public void setDataFim(LocalDate dataFim) {
+  public void setDataFim(Date dataFim) {
     this.dataFim = dataFim;
   }
 

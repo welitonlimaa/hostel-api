@@ -5,13 +5,15 @@ import com.example.hostelapi.dto.ReservaDTO;
 import com.example.hostelapi.repository.ReservaRepository;
 import com.example.hostelapi.service.exceptions.InvalidDataException;
 import com.example.hostelapi.service.exceptions.ObjectNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +38,15 @@ public class ReservaServiceTest {
   public void setUp() {
     reservaDTO = new ReservaDTO();
     reservaDTO.setNomeHospede("Fulano de Tal");
-    reservaDTO.setDataInicio(LocalDate.of(2023, 8, 10));
-    reservaDTO.setDataFim(LocalDate.of(2023, 8, 15));
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    try {
+      reservaDTO.setDataInicio(dateFormat.parse("2023-08-10"));
+      reservaDTO.setDataFim(dateFormat.parse("2023-08-15"));
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+
     reservaDTO.setQuantidadePessoas(4);
     reservaDTO.setStatus("CONFIRMADA");
 
@@ -46,15 +55,26 @@ public class ReservaServiceTest {
   }
 
   @Test
-  public void testCreateReserva() {
+  public void testCreateReserva() throws ParseException {
     when(reservaRepository.save(any(Reserva.class))).thenReturn(reserva);
 
-    Reserva novaReserva = reservaService.createReserva(reservaDTO);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date dataInicio = dateFormat.parse("2023-08-10");
+    Date dataFim = dateFormat.parse("2023-08-15");
 
+    ReservaDTO reservaDTO = new ReservaDTO();
+    reservaDTO.setNomeHospede("Fulano de Tal");
+    reservaDTO.setDataInicio(dataInicio);
+    reservaDTO.setDataFim(dataFim);
+    reservaDTO.setQuantidadePessoas(4);
+    reservaDTO.setStatus("CONFIRMADA");
+
+    Reserva novaReserva = reservaService.createReserva(reservaDTO);
+    SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
     assertNotNull(novaReserva);
     assertEquals(reservaDTO.getNomeHospede(), novaReserva.getNomeHospede());
-    assertEquals(reservaDTO.getDataInicio(), novaReserva.getDataInicio());
-    assertEquals(reservaDTO.getDataFim(), novaReserva.getDataFim());
+    assertEquals(dataFormat.format(dataInicio), dataFormat.format(novaReserva.getDataInicio()));
+    assertEquals(dataFormat.format(dataFim), dataFormat.format(novaReserva.getDataFim()));
     assertEquals(reservaDTO.getQuantidadePessoas(), novaReserva.getQuantidadePessoas());
     assertEquals(reservaDTO.getStatus(), novaReserva.getStatus());
 
@@ -63,7 +83,7 @@ public class ReservaServiceTest {
 
   @Test
   public void testTryCreateReserva_InvalidDataException() {
-    reservaDTO.setDataFim(LocalDate.of(2023, 8, 9));
+    reservaDTO.setDataFim(new Date(2023 - 1900, 7, 9));
 
     assertThrows(InvalidDataException.class, () -> reservaService.createReserva(reservaDTO));
 
@@ -113,8 +133,8 @@ public class ReservaServiceTest {
 
     ReservaDTO reservaAtualizadaDTO = new ReservaDTO();
     reservaAtualizadaDTO.setNomeHospede("Fulano da Silva");
-    reservaAtualizadaDTO.setDataInicio(LocalDate.of(2023, 8, 12));
-    reservaAtualizadaDTO.setDataFim(LocalDate.of(2023, 8, 17));
+    reservaAtualizadaDTO.setDataInicio(new Date(2023, 8, 12));
+    reservaAtualizadaDTO.setDataFim(new Date(2023, 8, 17));
     reservaAtualizadaDTO.setQuantidadePessoas(5);
     reservaAtualizadaDTO.setStatus("PENDENTE");
 
@@ -138,8 +158,8 @@ public class ReservaServiceTest {
 
     ReservaDTO reservaAtualizadaDTO = new ReservaDTO();
     reservaAtualizadaDTO.setNomeHospede("Fulano da Silva");
-    reservaAtualizadaDTO.setDataInicio(LocalDate.of(2023, 8, 12));
-    reservaAtualizadaDTO.setDataFim(LocalDate.of(2023, 8, 17));
+    reservaAtualizadaDTO.setDataInicio(new Date(2023, 8, 12));
+    reservaAtualizadaDTO.setDataFim(new Date(2023, 8, 17));
     reservaAtualizadaDTO.setQuantidadePessoas(5);
     reservaAtualizadaDTO.setStatus("PENDENTE");
 
