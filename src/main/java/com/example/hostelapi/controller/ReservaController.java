@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/reservas")
+@CrossOrigin("*")
 public class ReservaController {
 
   private final ReservaService reservaService;
