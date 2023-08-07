@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * Serviço responsável por operações relacionadas a reservas.
- * Implementa a regra de negócios para criar, buscar, atualizar e cancelar reservas.
+ * Serviço responsável por operações relacionadas a reservas. Implementa a regra de negócios para
+ * criar, buscar, atualizar e cancelar reservas.
  */
 @Service
 public class ReservaService {
@@ -83,13 +83,14 @@ public class ReservaService {
    */
   public Reserva getReservaById(Integer id) {
     Optional<Reserva> reservaOptional = reservaRepository.findById(id);
-    return reservaOptional.orElseThrow(() -> new ObjectNotFoundException("Reserva não encontrada. ID: " + id));
+    return reservaOptional.orElseThrow(
+        () -> new ObjectNotFoundException("Reserva não encontrada. ID: " + id));
   }
 
   /**
    * Atualiza uma reserva com base nos dados fornecidos no DTO.
    *
-   * @param id O ID da reserva a ser atualizada.
+   * @param id         O ID da reserva a ser atualizada.
    * @param reservaDTO O DTO contendo os novos detalhes da reserva.
    * @return A reserva atualizada.
    * @throws ObjectNotFoundException Se a reserva com o ID fornecido não for encontrada.

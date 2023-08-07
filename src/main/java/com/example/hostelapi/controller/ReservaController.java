@@ -95,10 +95,12 @@ public class ReservaController {
    * Obtém uma lista de reservas com base no status fornecido.
    *
    * @param status O status das reservas a serem buscadas. A comparação é case-sensitive.
-   * @return Uma resposta ResponseEntity contendo uma lista de reservas com o status correspondente e o status HTTP 200.
+   * @return Uma resposta ResponseEntity contendo uma lista de reservas com o status correspondente
+   * e o status HTTP 200.
    */
   @GetMapping("/status")
-  public ResponseEntity<List<Reserva>> getReservasByStatus(@RequestParam(name = "status") String status) {
+  public ResponseEntity<List<Reserva>> getReservasByStatus(
+      @RequestParam(name = "status") String status) {
     List<Reserva> reservas = reservaService.getReservasByStatus(status);
     return ResponseEntity.ok(reservas);
   }

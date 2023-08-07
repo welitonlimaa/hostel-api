@@ -2,13 +2,13 @@ package com.example.hostelapi.dto;
 
 import com.example.hostelapi.domain.Reserva;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Classe de transferência de dados (DTO) para uma reserva de hospedagem.
+ */
 public class ReservaDTO implements Serializable {
 
   private Integer id;
@@ -23,6 +23,11 @@ public class ReservaDTO implements Serializable {
   private Integer quantidadePessoas;
   private String status;
 
+  /**
+   * Construtor que recebe um objeto Reserva.
+   *
+   * @param obj A reserva de hospedagem da qual os dados serão copiados.
+   */
   public ReservaDTO(Reserva obj) {
     id = obj.getId();
     nomeHospede = obj.getNomeHospede();
@@ -32,7 +37,18 @@ public class ReservaDTO implements Serializable {
     status = obj.getStatus();
   }
 
-  public ReservaDTO(Integer id, String nomeHospede, Date dataInicio, Date dataFim, Integer quantidadePessoas, String status) {
+  /**
+   * Construtor.
+   *
+   * @param id                O ID da reserva.
+   * @param nomeHospede       O nome do hospede.
+   * @param dataInicio        A data de inicio da reserva.
+   * @param dataFim           A data de fim da reserva.
+   * @param quantidadePessoas A quantidade de pessoas na reserva.
+   * @param status            O status da reserva.
+   */
+  public ReservaDTO(Integer id, String nomeHospede, Date dataInicio, Date dataFim,
+      Integer quantidadePessoas, String status) {
     this.id = id;
     this.nomeHospede = nomeHospede;
     this.dataInicio = dataInicio;

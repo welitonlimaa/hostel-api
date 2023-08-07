@@ -1,14 +1,13 @@
 package com.example.hostelapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.util.Date;
 
+/**
+ * Classe que representa uma reserva de hospedagem.
+ */
 @Entity
 public class Reserva {
 
@@ -28,6 +27,16 @@ public class Reserva {
 
   private String status;
 
+  /**
+   * Construtor.
+   *
+   * @param id                O ID da reserva.
+   * @param nomeHospede       O nome do hospede.
+   * @param dataInicio        A data de inicio da reserva.
+   * @param dataFim           A data de fim da reserva.
+   * @param quantidadePessoas A quantidade de pessoas na reserva.
+   * @param status            O status da reserva.
+   */
   public Reserva(Integer id, String nomeHospede, Date dataInicio, Date dataFim,
       Integer quantidadePessoas, String status) {
     this.id = id;
