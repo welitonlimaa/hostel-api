@@ -14,16 +14,32 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+/**
+ * Serviço responsável por operações relacionadas a reservas.
+ * Implementa a regra de negócios para criar, buscar, atualizar e cancelar reservas.
+ */
 @Service
 public class ReservaService {
 
   private final ReservaRepository reservaRepository;
 
+  /**
+   * Construtor.
+   *
+   * @param reservaRepository O repositório a ser utilizado pelo serviço.
+   */
   @Autowired
   public ReservaService(ReservaRepository reservaRepository) {
     this.reservaRepository = reservaRepository;
   }
 
+  /**
+   * Cria uma nova reserva com base nos dados fornecidos no DTO.
+   *
+   * @param reservaDto O DTO contendo os detalhes da reserva a ser criada.
+   * @return A reserva criada.
+   * @throws InvalidDataException Se os dados fornecidos forem inválidos.
+   */
   public Reserva createReserva(ReservaDTO reservaDto) {
     try {
       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,15 +65,35 @@ public class ReservaService {
     }
   }
 
+  /**
+   * Obtém todas as reservas existentes.
+   *
+   * @return Uma lista contendo todas as reservas.
+   */
   public List<Reserva> getAllReservas() {
     return reservaRepository.findAll();
   }
 
+  /**
+   * Obtém uma reserva pelo seu ID.
+   *
+   * @param id O ID da reserva a ser obtida.
+   * @return A reserva encontrada.
+   * @throws ObjectNotFoundException Se a reserva com o ID fornecido não for encontrada.
+   */
   public Reserva getReservaById(Integer id) {
     Optional<Reserva> reservaOptional = reservaRepository.findById(id);
     return reservaOptional.orElseThrow(() -> new ObjectNotFoundException("Reserva não encontrada. ID: " + id));
   }
 
+  /**
+   * Atualiza uma reserva com base nos dados fornecidos no DTO.
+   *
+   * @param id O ID da reserva a ser atualizada.
+   * @param reservaDTO O DTO contendo os novos detalhes da reserva.
+   * @return A reserva atualizada.
+   * @throws ObjectNotFoundException Se a reserva com o ID fornecido não for encontrada.
+   */
   public Reserva updateReserva(Integer id, ReservaDTO reservaDTO) {
     Reserva reserva = getReservaById(id);
     reserva.setNomeHospede(reservaDTO.getNomeHospede());
@@ -68,9 +104,17 @@ public class ReservaService {
     return reservaRepository.save(reserva);
   }
 
+  /**
+   * Cancela uma reserva pelo seu ID.
+   *
+   * @param id O ID da reserva a ser cancelada.
+   * @return A reserva cancelada.
+   * @throws ObjectNotFoundException Se a reserva com o ID fornecido não for encontrada.
+   */
   public Reserva cancelarReserva(Integer id) {
     Reserva reserva = getReservaById(id);
     reserva.setStatus("CANCELADA");
     return reservaRepository.save(reserva);
   }
+
 }

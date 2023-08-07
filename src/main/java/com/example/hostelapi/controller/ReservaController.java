@@ -10,44 +10,85 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador responsável por manipular requisições relacionadas as reservas. Mapeia endpoints e
+ * gerencia a interação com a camada service.
+ */
 @RestController
 @RequestMapping("/reservas")
 public class ReservaController {
 
   private final ReservaService reservaService;
 
+  /**
+   * Construtor.
+   *
+   * @param reservaService O serviço a ser utilizado pelo controlador.
+   */
   @Autowired
   public ReservaController(ReservaService reservaService) {
     this.reservaService = reservaService;
   }
 
+  /**
+   * Cria uma nova reserva com base nos dados fornecidos no corpo da requisição.
+   *
+   * @param reservaDTO O DTO contendo os detalhes da reserva a ser criada.
+   * @return Uma resposta com a reserva criada e o status HTTP 201 (Created).
+   */
   @PostMapping
   public ResponseEntity<Reserva> createReserva(@Validated @RequestBody ReservaDTO reservaDTO) {
     Reserva novaReserva = reservaService.createReserva(reservaDTO);
     return new ResponseEntity<>(novaReserva, HttpStatus.CREATED);
   }
 
+  /**
+   * Obtém todas as reservas.
+   *
+   * @return Uma resposta com a lista de todas as reservas existentes.
+   */
   @GetMapping
   public ResponseEntity<List<Reserva>> getAllReservas() {
     List<Reserva> reservas = reservaService.getAllReservas();
     return ResponseEntity.ok(reservas);
   }
 
+  /**
+   * Obtém uma reserva pelo seu ID.
+   *
+   * @param id O ID da reserva a ser obtida.
+   * @return Uma resposta com a reserva encontrada.
+   */
   @GetMapping("/{id}")
   public ResponseEntity<Reserva> getReservaById(@PathVariable Integer id) {
     Reserva reserva = reservaService.getReservaById(id);
     return ResponseEntity.ok(reserva);
   }
 
+  /**
+   * Atualiza uma reserva com base nos dados fornecidos no corpo da requisição.
+   *
+   * @param id         O ID da reserva a ser atualizada.
+   * @param reservaDTO O DTO contendo os novos detalhes da reserva.
+   * @return Uma resposta com a reserva atualizada.
+   */
   @PutMapping("/{id}")
-  public ResponseEntity<Reserva> updateReserva(@PathVariable Integer id, @Validated @RequestBody ReservaDTO reservaDTO) {
+  public ResponseEntity<Reserva> updateReserva(@PathVariable Integer id,
+      @Validated @RequestBody ReservaDTO reservaDTO) {
     Reserva reservaAtualizada = reservaService.updateReserva(id, reservaDTO);
     return ResponseEntity.ok(reservaAtualizada);
   }
 
+  /**
+   * Cancela uma reserva pelo seu ID.
+   *
+   * @param id O ID da reserva a ser cancelada.
+   * @return Uma resposta com a reserva cancelada.
+   */
   @DeleteMapping("/{id}/cancelar")
   public ResponseEntity<Reserva> cancelarReserva(@PathVariable Integer id) {
     Reserva reservaCancelada = reservaService.cancelarReserva(id);
     return ResponseEntity.ok(reservaCancelada);
   }
+
 }
