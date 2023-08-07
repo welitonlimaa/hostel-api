@@ -7,6 +7,9 @@ Esta é uma API para gerenciar reservas em um hostel de temporada. Ela permite q
 - Spring Boot
 - H2 Database
 
+## Deploy
+- Link Api: https://hostel-api-production.up.railway.app/
+
 ## Endpoints
 
 ### Criar uma Reserva
