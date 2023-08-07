@@ -117,4 +117,14 @@ public class ReservaService {
     return reservaRepository.save(reserva);
   }
 
+  /**
+   * Obtém uma lista de reservas com base no status fornecido.
+   *
+   * @param status O status das reservas a serem buscadas. A comparação é case-insensitive.
+   * @return Uma lista contendo as reservas com o status correspondente.
+   */
+  public List<Reserva> getReservasByStatus(String status) {
+    return reservaRepository.findByStatusIgnoreCase(status);
+  }
+
 }
